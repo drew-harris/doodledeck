@@ -7,12 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -81,7 +75,7 @@ model Slide {
   Deck   Deck?   @relation(fields: [deckId], references: [id])
   deckId String?
 
-  image    String @unique
+  imageUrl String @unique
   drawData Json
 
   updatedAt DateTime @updatedAt
