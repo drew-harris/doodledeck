@@ -3,4 +3,3 @@ Google Cloud Auth
 Supabase (SQL)
 AWS S3
 Upstash (Redis)
-Bull MQ
