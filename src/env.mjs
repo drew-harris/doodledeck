@@ -25,6 +25,8 @@ const server = z.object({
   S3_ACCESS_KEY: z.string(),
   S3_SECRET_KEY: z.string(),
   S3_BUCKET: z.string(),
+
+  REDIS_URL: z.string().url(),
 });
 
 /**
@@ -56,6 +58,7 @@ const processEnv = {
   S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
   S3_SECRET_KEY: process.env.S3_SECRET_KEY,
   S3_BUCKET: process.env.S3_BUCKET,
+  REDIS_URL: process.env.REDIS_URL,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

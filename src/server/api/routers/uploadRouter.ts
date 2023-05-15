@@ -3,6 +3,7 @@ import S3 from "aws-sdk/clients/s3";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
+import { pdfProcessQueue } from "~/server/redis";
 
 export const uploadRouter = createTRPCRouter({
   getPresigned: protectedProcedure
@@ -33,8 +34,39 @@ export const uploadRouter = createTRPCRouter({
     }),
 
   convertPdf: protectedProcedure
-    .input(z.object({ url: z.string() }))
-    .mutation(({ input }) => {
+    .input(
+      z.object({
+        url: z.string(),
+        title: z.string(),
+        description: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const deck = await ctx.prisma.deck.create({
+        data: {
+          title: input.title,
+          description: input.description,
+          originalPdfFileUrl: input.url,
+          user: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
+        },
+      });
+
+      const jobId = "job" + deck.id + "-" + deck.userId;
+
+      await pdfProcessQueue.add(jobId, {
+        userId: deck.userId,
+        deckId: deck.id,
+        fileUrl: input.url,
+      });
+
       console.log(input.url);
+
+      return {
+        jobId,
+      };
     }),
 });

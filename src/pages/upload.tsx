@@ -29,6 +29,7 @@ const Upload: NextPage = () => {
     // Split the pdf into images -- test speed
     const result = await splitPdfMutation.mutateAsync({
       url: uploadInfo.finalUrl,
+      title: "Test Title",
     });
   };
 

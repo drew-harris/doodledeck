@@ -57,6 +57,7 @@ model VerificationToken {
 
 model Deck {
   id String @id @default(cuid())
+  processed Boolean @default(false)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
@@ -64,6 +65,8 @@ model Deck {
   title       String
   description String?
   slides      Slide[]
+
+  originalPdfFileUrl String
 
   createdAt DateTime @default(now())
 }
