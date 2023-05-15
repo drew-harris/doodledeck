@@ -7,7 +7,7 @@ const Upload: NextPage = () => {
   const getPresignedMutation = api.uploads.getPresigned.useMutation({});
   const splitPdfMutation = api.uploads.convertPdf.useMutation({});
 
-  const upload = async (): Promise<void> => {
+  const upload = async () => {
     if (!file) {
       return;
     }
@@ -31,6 +31,8 @@ const Upload: NextPage = () => {
       url: uploadInfo.finalUrl,
       title: "Test Title",
     });
+
+    return result;
   };
 
   const handleSubmit = () => {
