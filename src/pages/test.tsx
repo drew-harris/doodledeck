@@ -1,6 +1,6 @@
 import { type ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
 import { type NextPage } from "next";
-import ClientOnlyExcalidraw from "~/components/drawing/test";
+import ClientOnlyExcalidraw from "~/components/drawing/ClientOnlyExcalidraw";
 import { useCallbackRefState } from "~/hooks/useCallbackRefState";
 
 const Home: NextPage = () => {
